@@ -22,11 +22,11 @@ func AppInit(bus *event_bus.EventBus) {
 		panic(err)
 	}
 	for _, key := range config.Watch[c.Keys]{
-		go func(key string) {
+		go func(key map[string]string) {
 			defer func() {
 				if r:= recover(); r!=nil{
 					fmt.Printf("%s", r)
-					fmt.Printf("Recoverd for Key: %s", key)
+					fmt.Printf("Recoverd for Key: %s", key[c.Key])
 				}
 			}()
 			client, _ := clientv3.New(clientv3.Config{
@@ -39,10 +39,10 @@ func AppInit(bus *event_bus.EventBus) {
 				}
 			}()
 			for {
-				rep := client.Watch(context.Background(), key)
+				rep := client.Watch(context.Background(), key[c.Key])
 				for content := range rep {
 					for _, ev := range content.Events{
-						_ = bus.Publish(etcd.NewInnerEvent(ev))
+						_ = bus.Publish(etcd.NewInnerEvent(ev), key[c.Privilege])
 					}
 				}
 			}

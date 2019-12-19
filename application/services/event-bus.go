@@ -15,8 +15,24 @@ func init() {
 	go func() {
 		for {
 			select {
-			case event = <-Bus.Accept():
+			case event = <-Bus.Accept(event_bus.HIGH):
 				fmt.Print(event)
+			default:
+				select {
+				case event =<-Bus.Accept(event_bus.HIGH):
+					fmt.Print(event)
+				case event =<-Bus.Accept(event_bus.MID):
+					fmt.Print(event)
+				default:
+					select {
+					case event =<-Bus.Accept(event_bus.HIGH):
+						fmt.Print(event)
+					case event =<-Bus.Accept(event_bus.MID):
+						fmt.Print(event)
+					case event =<-Bus.Accept(event_bus.LOW):
+						fmt.Print(event)
+					}
+				}
 			}
 		}
 	}()

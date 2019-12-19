@@ -5,12 +5,14 @@ const (
 	Hosts = "hosts"
 	Watch = "watch"
 	Keys = "keys"
+	Key = "key"
+	Privilege = "privilege"
 	ConfigFilePath = "./config.yaml"
 )
 
 type Config struct {
 	Cluster map[string][]string
-	Watch  map[string][]string
+	Watch  map[string][]map[string]string
 	path string
 	type_ string
 }
@@ -36,6 +38,6 @@ func (c *Config) GetHosts() []string{
 	return c.Cluster[Hosts]
 }
 
-func (c *Config) GetWatchKeys() []string {
+func (c *Config) GetWatchKeys() []map[string]string {
 	return c.Watch[Keys]
 }

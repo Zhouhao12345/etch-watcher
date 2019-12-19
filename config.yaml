@@ -4,7 +4,12 @@ cluster:
 
 watch:
   keys:
-    - foo
-    - foo2
-    - foo3
-    - foo3/test
+    -
+      key: foo
+      privilege: high
+    -
+      key: foo2
+      privilege: low
+    -
+      key: foo3
+      privilege: mid
