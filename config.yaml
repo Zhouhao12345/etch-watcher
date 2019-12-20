@@ -1,8 +1,7 @@
-cluster:
+etcdcluster:
   hosts:
     - 127.0.0.1:2379
-
-watch:
+etcdwatcher:
   keys:
     -
       key: foo
@@ -13,3 +12,10 @@ watch:
     -
       key: foo3
       privilege: mid
+
+redis:
+  network: tcp
+  addr: 127.0.0.1:6379
+  db: 0
+  maxretries: 5
+  poolsize: 10000

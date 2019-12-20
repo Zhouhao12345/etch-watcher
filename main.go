@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"math"
 	"time"
-	"zhouhao.com/elevator/application/services"
-	_ "zhouhao.com/elevator/application/services"
+	_ "zhouhao.com/elevator/application/services/config"
+	_ "zhouhao.com/elevator/application/services/logger"
+	_ "zhouhao.com/elevator/application/services/event-bus"
+	_ "zhouhao.com/elevator/application/services/redis"
 )
 
 func main() {
@@ -13,7 +15,6 @@ func main() {
 		start time.Time
 	)
 	start = time.Now()
-	services.AppInit(services.Bus)
 	for {
 			cur := time.Now()
 			dur := cur.Sub(start)

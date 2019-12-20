@@ -1,7 +1,7 @@
-package services
+package event_bus
 
 import (
-	"fmt"
+	eventbus_register "zhouhao.com/elevator/domains/adapters/eventbus-register"
 	"zhouhao.com/elevator/infrastructuration/event-bus"
 )
 
@@ -16,24 +16,26 @@ func init() {
 		for {
 			select {
 			case event = <-Bus.Accept(event_bus.HIGH):
-				fmt.Print(event)
+				Bus.Push2Consumer(event, event_bus.HIGH)
 			default:
 				select {
 				case event =<-Bus.Accept(event_bus.HIGH):
-					fmt.Print(event)
+					Bus.Push2Consumer(event, event_bus.HIGH)
 				case event =<-Bus.Accept(event_bus.MID):
-					fmt.Print(event)
+					Bus.Push2Consumer(event, event_bus.MID)
 				default:
 					select {
 					case event =<-Bus.Accept(event_bus.HIGH):
-						fmt.Print(event)
+						Bus.Push2Consumer(event, event_bus.HIGH)
 					case event =<-Bus.Accept(event_bus.MID):
-						fmt.Print(event)
+						Bus.Push2Consumer(event, event_bus.MID)
 					case event =<-Bus.Accept(event_bus.LOW):
-						fmt.Print(event)
+						Bus.Push2Consumer(event, event_bus.LOW)
 					}
 				}
 			}
 		}
 	}()
+	eventbus_register.RegisterInit(Bus)
+	WatcherInit(Bus)
 }

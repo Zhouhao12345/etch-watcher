@@ -1,6 +1,9 @@
 package etcd
 
-import "go.etcd.io/etcd/clientv3"
+import (
+	"encoding/json"
+	"go.etcd.io/etcd/clientv3"
+)
 
 type InnerEvent struct {
 	event *clientv3.Event
@@ -24,4 +27,12 @@ func (e *InnerEvent)GetContent() string {
 
 func (e *InnerEvent)String() string {
 	return e.event.Kv.String()
+}
+
+func (e *InnerEvent) Serialize() (string, error) {
+	if serByte, err := json.Marshal(e.event); err != nil {
+		return "", err
+	} else {
+		return string(serByte) ,nil
+	}
 }
