@@ -1,6 +1,7 @@
 package event_bus
 
 import (
+	"log"
 	eventbus_register "zhouhao.com/elevator/domains/adapters/eventbus-register"
 	"zhouhao.com/elevator/infrastructuration/event-bus"
 )
@@ -38,4 +39,5 @@ func init() {
 	}()
 	eventbus_register.RegisterInit(Bus)
 	WatcherInit(Bus)
+	log.Print("EventBus Service Init Success")
 }

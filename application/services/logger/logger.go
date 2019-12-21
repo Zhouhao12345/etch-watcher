@@ -3,11 +3,9 @@ package logger
 import (
 	"log"
 	"os"
+	"zhouhao.com/elevator/application/services/config"
 )
 
-const (
-	FilePath = "/tmp/watch.log"
-)
 
 type logging struct {
 	filename string
@@ -33,8 +31,13 @@ func NewLogger(filename string) (*logging, error) {
 
 
 func init()  {
+	var filePath string
 	var err error
-	if Logger, err = NewLogger(FilePath); err != nil {
+
+	filePath = config.LoggerConfig.GetFilePath()
+	if Logger, err = NewLogger(filePath); err != nil {
 		panic(err)
+	} else {
+		log.Print("Logger Service Init Success")
 	}
 }

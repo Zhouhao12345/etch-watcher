@@ -27,7 +27,7 @@ func NewConfig() Config {
 }
 
 func convertStr2Int(s string) int64 {
-	if db, err := strconv.ParseInt(s, 10, 8); err != nil {
+	if db, err := strconv.ParseInt(s, 10, 16); err != nil {
 		panic(err)
 	} else {
 		return db

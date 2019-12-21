@@ -2,26 +2,27 @@ package main
 
 import (
 	"fmt"
-	"math"
 	"time"
 	_ "zhouhao.com/elevator/application/services/config"
-	_ "zhouhao.com/elevator/application/services/logger"
 	_ "zhouhao.com/elevator/application/services/event-bus"
+	_ "zhouhao.com/elevator/application/services/logger"
 	_ "zhouhao.com/elevator/application/services/redis"
 )
 
 func main() {
 	var (
-		start time.Time
+		start,oStart time.Time
+		cur time.Time
 	)
+	oStart = time.Now()
 	start = time.Now()
 	for {
-			cur := time.Now()
-			dur := cur.Sub(start)
-			durSecs := dur.Seconds()
-			durSecsRound := math.Floor(durSecs)
-			if durSecs-durSecsRound <= math.Pow(10, -6) {
-				fmt.Printf("Wait For Seconds: %f\n", durSecsRound)
-			}
+				cur = time.Now()
+				durSecond := cur.Sub(start)
+				if durSecond >= time.Second {
+					start = cur
+					oDurSecond := cur.Sub(oStart).Seconds()
+					fmt.Printf("Wait For Seconds: %f\n", oDurSecond)
+				}
 		}
 }

@@ -2,6 +2,7 @@ package redis
 
 import (
 	"github.com/go-redis/redis"
+	"log"
 	"zhouhao.com/elevator/application/services/config"
 	"zhouhao.com/elevator/application/services/logger"
 	rd "zhouhao.com/elevator/infrastructuration/redis"
@@ -40,6 +41,11 @@ var con *RedisProxy
 func init()  {
 	con = &RedisProxy{
 		rd.NewRedisClient(optionBuilder(config.RedisConfig)),
+	}
+	if result, err :=  con.Ping().Result(); err != nil {
+		panic(err)
+	} else {
+		log.Printf("Redis Service Init Success: %s", result)
 	}
 }
 

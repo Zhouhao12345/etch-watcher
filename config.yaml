@@ -1,6 +1,6 @@
 etcdcluster:
   hosts:
-    - 127.0.0.1:2379
+    - 0.0.0.0:2379
 etcdwatcher:
   keys:
     -
@@ -15,7 +15,11 @@ etcdwatcher:
 
 redis:
   network: tcp
-  addr: 127.0.0.1:6379
+  addr: 0.0.0.0:6379
   db: 0
   maxretries: 5
   poolsize: 10000
+  password: Hello123
+
+logger:
+  filepath: ./watch.log
